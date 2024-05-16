@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ouvrir une page Web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ouvrir la page de Vesta</h1>
+        <button onclick="openVestaPage()">Ouvrir la page de Vesta</button>
+    </div>
+
+    <script>
+        // Fonction pour ouvrir la page de Vesta dans le même onglet
+        function openVestaPage() {
+            window.open('https://api.nasa.gov/vesta-wmts/catalog/Vesta_Dawn_HAMO_TrueClr_DLR_global_74ppd.html', '_self');
+        }
+    </script>
+</body>
+</html>

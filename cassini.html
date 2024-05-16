@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astéroïdes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .asteroid {
+            margin-bottom: 20px;
+        }
+
+        .asteroid p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Astéroïdes</h1>
+        <div class="asteroids" id="asteroidsList"></div>
+    </div>
+
+    <script>
+        // Fonction pour récupérer et afficher les données sur les astéroïdes à partir de l'API NEO
+        async function fetchAsteroids(apiUrl, targetElementId) {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                const asteroids = data.near_earth_objects;
+
+                const asteroidsContainer = document.getElementById(targetElementId);
+
+                // Obtenir la date d'aujourd'hui au format YYYY-MM-DD
+                const today = new Date();
+                const todayFormatted = today.toISOString().slice(0, 10);
+
+                // Parcourir les données pour chaque jour
+                Object.keys(asteroids).forEach(date => {
+                    const asteroidsForDate = asteroids[date];
+
+                    // Afficher uniquement les données pour la date d'aujourd'hui
+                    if (date === todayFormatted) {
+                        const dateHeading = document.createElement('h2');
+                        dateHeading.textContent = `Astéroïdes le ${date}`;
+                        asteroidsContainer.appendChild(dateHeading);
+
+                        // Parcourir les données pour chaque astéroïde
+                        asteroidsForDate.forEach(asteroid => {
+                            const asteroidDiv = document.createElement('div');
+                            asteroidDiv.classList.add('asteroid');
+
+                            const nameParagraph = document.createElement('p');
+                            nameParagraph.textContent = `Nom : ${asteroid.name}`;
+                            asteroidDiv.appendChild(nameParagraph);
+
+                            const diameterParagraph = document.createElement('p');
+                            diameterParagraph.textContent = `Diamètre (mètres) : ${asteroid.estimated_diameter.meters.estimated_diameter_min} - ${asteroid.estimated_diameter.meters.estimated_diameter_max}`;
+                            asteroidDiv.appendChild(diameterParagraph);
+
+                            const hazardousParagraph = document.createElement('p');
+                            hazardousParagraph.textContent = `Potentiellement dangereux : ${asteroid.is_potentially_hazardous_asteroid ? 'Oui' : 'Non'}`;
+                            asteroidDiv.appendChild(hazardousParagraph);
+
+                            asteroidsContainer.appendChild(asteroidDiv);
+                        });
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching asteroids:', error);
+                document.getElementById(targetElementId).innerHTML = 'Erreur lors de la récupération des données sur les astéroïdes';
+            }
+        }
+
+        // URL de l'API NEO
+        const neoApiUrl = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${getCurrentDate()}&end_date=${getCurrentDate()}&api_key=hpkvmGyuSSlJKfNI6oTp7A6887cb0HcJWKaDv17g`;
+
+        // Récupérer et afficher les données sur les astéroïdes
+        fetchAsteroids(neoApiUrl, 'asteroidsList');
+
+        // Fonction pour obtenir la date actuelle au format YYYY-MM-DD
+        function getCurrentDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+    </script>
+</body>
+</html>

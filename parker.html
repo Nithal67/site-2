@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Parker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .data {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .data-title {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Données de la sonde Parker</h1>
+        <div class="data" id="ejectionMassCoronal"></div>
+        <div class="data" id="ejectionMassCoronalAnalysis"></div>
+        <div class="data" id="geomagneticStorms"></div>
+        <div class="data" id="solarChargedParticles"></div>
+        <div class="data" id="magnetopausePassage"></div>
+    </div>
+
+    <script>
+        // Fonction pour récupérer les données à partir de l'API et les afficher
+        async function fetchData(apiUrl, targetElementId) {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                const formattedData = JSON.stringify(data, null, 2);
+                document.getElementById(targetElementId).innerHTML = `<pre>${formattedData}</pre>`;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById(targetElementId).innerHTML = 'Erreur lors de la récupération des données';
+            }
+        }
+
+        // URLs des API
+        const apiEndpoints = {
+            ejectionMassCoronal: `https://api.nasa.gov/DONKI/CME?startDate=2017-01-03&endDate=2017-01-03&api_key=hpkvmGyuSSlJKfNI6oTp7A6887cb0HcJWKaDv17g`,
+            ejectionMassCoronalAnalysis: `https://api.nasa.gov/DONKI/CMEAnalysis?startDate=2016-09-01&endDate=2016-09-30&mostAccurateOnly=true&speed=500&minceAngle=30&all=true&api_key=hpkvmGyuSSlJKfNI6oTp7A6887cb0HcJWKaDv17g`,
+            geomagneticStorms: `https://api.nasa.gov/DONKI/GST?startDate=yyy-MM-dd&endDate=yyyyyyy-yyyyy-yyyy-dd&api_key=hpkvmGyuSSlJKfNI6oTp7A6887cb0HcJWKaDv17g`,
+            solarChargedParticles: `https://api.nasa.gov/DONKI/SEP?startDate=yyyy-MM-dd&endDate=yyyy-yyyy-yyyy-MM-dd&api_key=hpkvmGyuSSlJKfNI6oTp7A6887cb0HcJWKaDv17g`,
+            magnetopausePassage: `https://api.nasa.gov/DONKI/MPC?startDate=yyy-MM-dd&end=yyyyyy-yyyyyyy-yyyyy-yyyyy-yyyy-yyy-yyy-d-KEY`
+        };
+
+        // Récupérer et afficher les données pour chaque API
+        fetchData(apiEndpoints.ejectionMassCoronal, 'ejectionMassCoronal');
+        fetchData(apiEndpoints.ejectionMassCoronalAnalysis, 'ejectionMassCoronalAnalysis');
+        fetchData(apiEndpoints.geomagneticStorms, 'geomagneticStorms');
+        fetchData(apiEndpoints.solarChargedParticles, 'solarChargedParticles');
+        fetchData(apiEndpoints.magnetopausePassage, 'magnetopausePassage');
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chargement</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="loader">
+        <h2>Chargement des satellites...</h2>
+        <div class="progress-bar"></div>
+    </div>
+    <script>
+        // Simuler la progression de la barre de chargement
+        setTimeout(() => {
+            window.location.href = "page_principale.html"; // Rediriger vers la page principale après le chargement
+        }, 15000); // Temps de chargement simulé : 15 secondes
+    </script>
+</body>
+</html>

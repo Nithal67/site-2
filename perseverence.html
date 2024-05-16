@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photos de Perseverance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .photo {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .photo img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Photos de Perseverance</h1>
+        <div class="photos" id="photosSol1000Page2"></div>
+        <div class="photos" id="photosSol1000FHAZ"></div>
+        <div class="photos" id="photosSol1000PANCAM"></div>
+        <div class="photos" id="photosEarthDate2015_6_3"></div>
+    </div>
+
+    <script>
+        // Fonction pour récupérer et afficher les photos à partir de l'API
+        async function fetchPhotos(apiUrl, targetElementId) {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                const photos = data.photos;
+                const photoContainer = document.getElementById(targetElementId);
+                photos.forEach(photo => {
+                    const img = document.createElement('img');
+                    img.src = photo.img_src;
+                    img.alt = photo.id;
+                    const photoDiv = document.createElement('div');
+                    photoDiv.classList.add('photo');
+                    photoDiv.appendChild(img);
+                    photoContainer.appendChild(photoDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching photos:', error);
+                document.getElementById(targetElementId).innerHTML = 'Erreur lors de la récupération des photos';
+            }
+        }
+
+        // URLs des API
+        const apiEndpoints = {
+            photosSol1000FHAZ: 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=fhaz&api_key=hpkvmGyuSSlJKfNI6oTp7A6887cb0HcJWKaDv17g',
+            photosSol1000PANCAM: 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=300&camera=navcam&api_key=hpkvmGyuSSlJKfNI6oTp7A6887cb0HcJWKaDv17g',
+            photosSol1000Page2: 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=0&camera=mast&api_key=hpkvmGyuSSlJKfNI6oTp7A6887cb0HcJWKaDv17g',
+            photosEarthDate2015_6_3: 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2020-6-3&api_key=hpkvmGyuSSlJKfNI6oTp7A6887cb0HcJWKaDv17g'
+        };
+
+        // Récupérer et afficher les photos pour chaque API
+        fetchPhotos(apiEndpoints.photosSol1000PANCAM, 'photosSol1000PANCAM');
+        fetchPhotos(apiEndpoints.photosSol1000FHAZ, 'photosSol1000FHAZ');
+        fetchPhotos(apiEndpoints.photosSol1000Page2, 'photosSol1000Page2');
+        fetchPhotos(apiEndpoints.photosEarthDate2015_6_3, 'photosEarthDate2015_6_3');
+    </script>
+</body>
+</html>

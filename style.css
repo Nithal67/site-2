@@ -1,0 +1,114 @@
+/* Styles généraux */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('fond.jpg');
+    background-size: cover;
+    color: #fff;
+}
+
+/* Styles pour la page d'accueil */
+.login-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.login-form h2 {
+    margin-bottom: 20px;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.login-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.error-message {
+    color: red;
+    display: none;
+}
+
+/* Styles pour la page principale */
+.banner {
+    position: relative;
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+}
+
+banner {
+    text-align: left;
+    padding: 20px;
+}
+
+.banner img {
+    width: 150px;
+    height: auto;
+}
+
+.menu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu ul li {
+    margin-bottom: 20px;
+}
+
+.menu ul li a {
+    display: block;
+    padding: 20px 40px;
+    background-color: transparent;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.menu ul li a:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 10px; /* Ajustez la taille de votre logo selon vos besoins */
+}
+
+.logo img {
+    width: 100px; /* Ajustez la largeur selon vos besoins */
+    height: auto; /* Conservez le rapport hauteur/largeur */
+}
